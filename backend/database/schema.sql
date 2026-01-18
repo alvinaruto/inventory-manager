@@ -45,6 +45,7 @@ CREATE TABLE categories (
 CREATE TABLE products (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL,
+    name_km VARCHAR(255),
     description TEXT,
     category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
     image_url TEXT,

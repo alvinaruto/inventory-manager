@@ -1,4 +1,5 @@
-import 'dart:io';
+import 'dart:io' as io;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
   final _skuController = TextEditingController();
 
   String? _selectedCategoryId;
-  File? _selectedImage;
+  XFile? _selectedImage;
   String _costCurrency = 'USD';
   String _sellingCurrency = 'USD';
   bool _isLoading = false;
@@ -101,7 +102,7 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
       final picked = await picker.pickImage(source: source, maxWidth: 800);
       if (picked != null) {
         setState(() {
-          _selectedImage = File(picked.path);
+          _selectedImage = picked;
         });
       }
     }
@@ -448,10 +449,15 @@ class _ProductFormScreenState extends State<ProductFormScreen> {
         child: _selectedImage != null
             ? ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Image.file(
-                  _selectedImage!,
-                  fit: BoxFit.cover,
-                ),
+                child: kIsWeb
+                    ? Image.network(
+                        _selectedImage!.path,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(
+                        io.File(_selectedImage!.path),
+                        fit: BoxFit.cover,
+                      ),
               )
             : _isEditing && widget.product!.imageUrl != null
                 ? ClipRRect(

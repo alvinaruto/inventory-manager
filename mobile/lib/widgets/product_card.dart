@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../models/product.dart';
+import '../providers/currency_provider.dart';
 import '../utils/app_colors.dart';
 
 class ProductCard extends StatelessWidget {
@@ -20,7 +21,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormat = NumberFormat.currency(symbol: '\$', decimalDigits: 2);
+    final currencyProvider = Provider.of<CurrencyProvider>(context);
     final stockColor = AppColors.stockStatusColor(product.stockStatus.value);
     final stockBgColor = AppColors.stockStatusBackground(product.stockStatus.value);
 
@@ -100,7 +101,7 @@ class ProductCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          currencyFormat.format(product.sellingPrice),
+                          currencyProvider.format(product.sellingPrice, product.sellingCurrency),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -110,7 +111,7 @@ class ProductCard extends StatelessWidget {
                         if (showCostPrice && product.costPrice != null) ...[
                           const SizedBox(width: 8),
                           Text(
-                            'Cost: ${currencyFormat.format(product.costPrice)}',
+                            'Cost: ${currencyProvider.format(product.costPrice!, product.costCurrency)}',
                             style: TextStyle(
                               fontSize: 12,
                               color: AppColors.textSecondary,

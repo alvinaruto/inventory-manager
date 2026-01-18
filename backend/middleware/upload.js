@@ -15,11 +15,15 @@ const storage = multer.diskStorage({
 // File filter to only accept images
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    // Allow octet-stream if extension is valid (common in some web/mobile upload scenarios)
+    const ext = path.extname(file.originalname).toLowerCase();
+    const isImageExt = ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext);
 
-    if (allowedTypes.includes(file.mimetype)) {
+    if (allowedTypes.includes(file.mimetype) || (file.mimetype === 'application/octet-stream' && isImageExt)) {
         cb(null, true);
     } else {
-        cb(new Error('Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.'), false);
+        console.log('Upload blocked:', file.mimetype, file.originalname);
+        cb(new Error(`Invalid file type (${file.mimetype}). Only JPEG, PNG, GIF, and WebP are allowed.`), false);
     }
 };
 

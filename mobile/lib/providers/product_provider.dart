@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import '../models/product.dart';
 import '../services/api_service.dart';
 import '../utils/api_config.dart';
@@ -151,7 +151,7 @@ class ProductProvider with ChangeNotifier {
     required int quantityInStock,
     int? lowStockThreshold,
     String? sku,
-    File? image,
+    XFile? image,
   }) async {
     try {
       _isLoading = true;
@@ -212,7 +212,7 @@ class ProductProvider with ChangeNotifier {
     required int quantityInStock,
     int? lowStockThreshold,
     String? sku,
-    File? image,
+    XFile? image,
   }) async {
     try {
       _isLoading = true;

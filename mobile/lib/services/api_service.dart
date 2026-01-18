@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import '../utils/api_config.dart';
 
 class ApiException implements Exception {
@@ -134,7 +135,7 @@ class ApiService {
   Future<Map<String, dynamic>> postMultipart(
     String endpoint,
     Map<String, String> fields,
-    {File? imageFile, String imageFieldName = 'image'}
+    {XFile? imageFile, String imageFieldName = 'image'}
   ) async {
     try {
       final uri = Uri.parse(ApiConfig.buildUrl(endpoint));
@@ -150,9 +151,11 @@ class ApiService {
       
       // Add image if provided
       if (imageFile != null) {
-        request.files.add(await http.MultipartFile.fromPath(
+        final bytes = await imageFile.readAsBytes();
+        request.files.add(http.MultipartFile.fromBytes(
           imageFieldName,
-          imageFile.path,
+          bytes,
+          filename: imageFile.name,
         ));
       }
       
@@ -171,7 +174,7 @@ class ApiService {
   Future<Map<String, dynamic>> putMultipart(
     String endpoint,
     Map<String, String> fields,
-    {File? imageFile, String imageFieldName = 'image'}
+    {XFile? imageFile, String imageFieldName = 'image'}
   ) async {
     try {
       final uri = Uri.parse(ApiConfig.buildUrl(endpoint));
@@ -184,9 +187,11 @@ class ApiService {
       request.fields.addAll(fields);
       
       if (imageFile != null) {
-        request.files.add(await http.MultipartFile.fromPath(
+        final bytes = await imageFile.readAsBytes();
+        request.files.add(http.MultipartFile.fromBytes(
           imageFieldName,
-          imageFile.path,
+          bytes,
+          filename: imageFile.name,
         ));
       }
       
