@@ -1,0 +1,25 @@
+# System Files
+.DS_Store
+Thumbs.db
+*.log
+
+# Node.js (Backend)
+node_modules/
+npm-debug.log
+backend/.env
+backend/coverage/
+
+# Flutter (Mobile)
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/.pub-cache/
+mobile/build/
+mobile/ios/Flutter/Generated.xcconfig
+mobile/ios/Flutter/flutter_export_environment.sh
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/android/key.properties
+
+# Artifacts
+brain/
