@@ -61,6 +61,15 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// Root path handler
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'Inventory Management API is running. Access endpoints at /api',
+        documentation: '/api'
+    });
+});
+
 // API Info
 app.get('/api', (req, res) => {
     res.json({
