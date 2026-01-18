@@ -19,9 +19,9 @@ const app = express();
 
 // Enable CORS for all origins (adjust for production)
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production'
-        ? process.env.ALLOWED_ORIGINS?.split(',')
-        : '*',
+    origin: process.env.NODE_ENV === 'production' && process.env.ALLOWED_ORIGINS
+        ? process.env.ALLOWED_ORIGINS.split(',')
+        : '*', // Default to allowing all if not configured
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));

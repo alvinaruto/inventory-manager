@@ -15,7 +15,8 @@ class ApiConfig {
   // static const String baseUrl = 'http://192.168.1.100:3000/api';
   
   // Default for testing (will work on iOS simulator and web)
-  static const String baseUrl = 'http://localhost:3000/api';
+  // static const String baseUrl = 'http://localhost:3000/api';
+  static const String baseUrl = 'https://inventory-manager-1-zt6v.onrender.com/api';
   
   // API Endpoints
   static const String auth = '/auth';
